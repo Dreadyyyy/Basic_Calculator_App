@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -20,17 +19,18 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.basiccalculatorapp.data.CalculatorButton
 import com.example.basiccalculatorapp.ui.screens.content.AutoResizedText
-import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 import com.example.basiccalculatorapp.ui.screens.content.PrimaryButtonsPane
 import com.example.basiccalculatorapp.ui.screens.content.SecondaryButtonsPane
+import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 
 @Composable
 fun CalculatorScreen(
     expression: String,
     result: String,
     buttonsPaneType: ButtonsPaneType,
-    onClickAction: (String) -> Unit
+    onClickAction: (CalculatorButton) -> Unit
 ) {
     Column(
         verticalArrangement = Arrangement.Bottom,
@@ -55,13 +55,13 @@ fun CalculatorScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { onClickAction("<-") },
+                onClick = { onClickAction(CalculatorButton.Backspace) },
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(4.dp)
                     .height(44.dp)
             ) {
-                AutoResizedText(text = "<-", initialFontSize = 20.sp)
+                AutoResizedText(text = CalculatorButton.Backspace.buttonText, initialFontSize = 20.sp)
             }
         }
         Spacer(modifier = Modifier.height(8.dp))

@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.basiccalculatorapp.data.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 import com.example.basiccalculatorapp.model.CalculatorUiState
 import com.example.basiccalculatorapp.ui.screens.CalculatorScreen
@@ -20,12 +21,11 @@ fun BasicCalculatorApp(
     val buttonsPaneType: ButtonsPaneType =
         if (windowWidthSizeClass == WindowWidthSizeClass.Compact) ButtonsPaneType.Basic
         else ButtonsPaneType.Expanded
-
     CalculatorScreen(
         expression = calculatorUiState.value.shownExpression,
         result = calculatorUiState.value.result,
         buttonsPaneType = buttonsPaneType,
-        onClickAction = { symbol: String -> calculatorViewModel.onButtonPressed(symbol) }
+        onClickAction = { button: CalculatorButton -> calculatorViewModel.onButtonPressed(button) }
     )
 }
 

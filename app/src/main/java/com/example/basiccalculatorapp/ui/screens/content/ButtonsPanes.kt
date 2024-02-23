@@ -22,10 +22,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.basiccalculatorapp.data.CalculatorButton
 
 @Composable
 fun PrimaryButtonsPane(
-    onClickAction: (String) -> Unit,
+    onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -36,10 +37,10 @@ fun PrimaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "C" to "C",
-                "(" to "(",
-                ")" to ")",
-                "+" to "+"
+                CalculatorButton.Clear,
+                CalculatorButton.Symbol("("),
+                CalculatorButton.Symbol(")"),
+                CalculatorButton.Symbol("+"),
             ),
             modifier = Modifier
                 .weight(1F)
@@ -48,10 +49,10 @@ fun PrimaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "1" to "1",
-                "2" to "2",
-                "3" to "3",
-                "-" to "-"
+                CalculatorButton.Symbol("1"),
+                CalculatorButton.Symbol("2"),
+                CalculatorButton.Symbol("3"),
+                CalculatorButton.Symbol("-"),
             ),
             modifier = Modifier
                 .weight(1F)
@@ -60,10 +61,10 @@ fun PrimaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "4" to "4",
-                "5" to "5",
-                "6" to "6",
-                "*" to "*"
+                CalculatorButton.Symbol("4"),
+                CalculatorButton.Symbol("5"),
+                CalculatorButton.Symbol("6"),
+                CalculatorButton.Symbol("*"),
             ),
             modifier = Modifier
                 .weight(1F)
@@ -72,10 +73,10 @@ fun PrimaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "7" to "7",
-                "8" to "8",
-                "9" to "9",
-                "/" to "/"
+                CalculatorButton.Symbol("7"),
+                CalculatorButton.Symbol("8"),
+                CalculatorButton.Symbol("9"),
+                CalculatorButton.Symbol("/"),
             ),
             modifier = Modifier
                 .weight(1F)
@@ -84,10 +85,10 @@ fun PrimaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "." to ".",
-                "0" to "0",
-                "," to ",",
-                "=" to "="
+                CalculatorButton.Symbol("."),
+                CalculatorButton.Symbol("0"),
+                CalculatorButton.Symbol(","),
+                CalculatorButton.Equals
             ),
             modifier = Modifier
                 .weight(1F)
@@ -98,7 +99,7 @@ fun PrimaryButtonsPane(
 
 @Composable
 fun SecondaryButtonsPane(
-    onClickAction: (String) -> Unit,
+    onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -107,27 +108,55 @@ fun SecondaryButtonsPane(
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "sin" to "sin(",
-                "cos" to "cos(",
-                "tan" to "tan("
+                CalculatorButton.MathematicalFunction(
+                    "sin",
+                    "sin(",
+                    "sin("
+                ),
+                CalculatorButton.MathematicalFunction(
+                    "cos",
+                    "cos(",
+                    "cos("
+                ),
+                CalculatorButton.MathematicalFunction(
+                    "tan",
+                    "tan(",
+                    "tan("
+                ),
             ),
             modifier = Modifier.weight(1F)
             )
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "sqrt" to "sqrt(",
-                "xʸ" to "^(",
-                "ln" to "log("
+                CalculatorButton.MathematicalFunction(
+                    "sqrt",
+                    "sqrt(",
+                    "sqrt("
+                ),
+                CalculatorButton.MathematicalFunction(
+                    "xʸ",
+                    "^(",
+                    "^("
+                ),
+                CalculatorButton.MathematicalFunction(
+                    "ln",
+                    "log(",
+                    "log("
+                )
             ),
             modifier = Modifier.weight(1F)
             )
         RowOfButtons(
             onClickAction = onClickAction,
             buttons = listOf(
-                "logₓy" to ("logB("),
-                "e" to "e",
-                "π" to "π"
+                CalculatorButton.MathematicalFunction(
+                    "logₓy",
+                    "logₓy(",
+                    "logB("
+                ),
+                CalculatorButton.Symbol("e"),
+                CalculatorButton.Symbol("π")
             ),
             modifier = Modifier.weight(1F)
         )
@@ -135,16 +164,16 @@ fun SecondaryButtonsPane(
 }
 @Composable
 fun RowOfButtons(
-    onClickAction: (String) -> Unit,
-    buttons: List<Pair<String, String>>,
+    onClickAction: (CalculatorButton) -> Unit,
+    buttons: List<CalculatorButton>,
     modifier: Modifier = Modifier
 ) {
     Row(
         modifier = modifier
     ) {
-        buttons.forEach { (symbol: String, toPrint: String)->
+        buttons.forEach { button: CalculatorButton->
             Button(
-                onClick = { onClickAction(toPrint) },
+                onClick = { onClickAction(button) },
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(4.dp)
@@ -152,7 +181,7 @@ fun RowOfButtons(
                     .fillMaxHeight()
             ) {
 //                Text(text = symbol, fontSize = 32.sp)
-                AutoResizedText(text = symbol, initialFontSize = 36.sp)
+                AutoResizedText(text = button.buttonText, initialFontSize = 36.sp)
             }
         }
     }
