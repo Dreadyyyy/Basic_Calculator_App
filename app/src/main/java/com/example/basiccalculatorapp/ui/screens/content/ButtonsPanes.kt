@@ -3,6 +3,7 @@ package com.example.basiccalculatorapp.ui.screens.content
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,9 +24,11 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.basiccalculatorapp.data.CalculatorButton
+import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 
 @Composable
 fun PrimaryButtonsPane(
+    buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -35,6 +38,7 @@ fun PrimaryButtonsPane(
         modifier = modifier
     ) {
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Clear,
@@ -47,6 +51,7 @@ fun PrimaryButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Symbol("1"),
@@ -59,6 +64,7 @@ fun PrimaryButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Symbol("4"),
@@ -71,6 +77,7 @@ fun PrimaryButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Symbol("7"),
@@ -83,6 +90,7 @@ fun PrimaryButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Symbol("."),
@@ -99,6 +107,7 @@ fun PrimaryButtonsPane(
 
 @Composable
 fun SecondaryButtonsPane(
+    buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -106,6 +115,7 @@ fun SecondaryButtonsPane(
         modifier = modifier
     ) {
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.MathematicalFunction(
@@ -127,6 +137,7 @@ fun SecondaryButtonsPane(
             modifier = Modifier.weight(1F)
             )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.MathematicalFunction(
@@ -148,6 +159,7 @@ fun SecondaryButtonsPane(
             modifier = Modifier.weight(1F)
             )
         RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.MathematicalFunction(
@@ -164,59 +176,42 @@ fun SecondaryButtonsPane(
 }
 @Composable
 fun RowOfButtons(
+    buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     buttons: List<CalculatorButton>,
     modifier: Modifier = Modifier
 ) {
     Row(
-        modifier = modifier
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center,
+        modifier = modifier.fillMaxWidth()
     ) {
         buttons.forEach { button: CalculatorButton->
             Button(
                 onClick = { onClickAction(button) },
                 modifier = Modifier
                     .clip(CircleShape)
-                    .padding(4.dp)
                     .weight(1F)
                     .fillMaxHeight()
+                    .padding(4.dp)
             ) {
-//                Text(text = symbol, fontSize = 32.sp)
-                AutoResizedText(text = button.buttonText, initialFontSize = 36.sp)
+                Text(
+                    text = button.buttonText,
+                    fontSize =
+                        if (buttonsFontSize == ButtonsFontSize.Expanded) 32.sp
+                        else 12.sp
+                )
             }
         }
     }
 }
 
-@Composable
-fun AutoResizedText(text: String, initialFontSize: TextUnit) {
-    var resizedFontSize: TextUnit by remember {
-        mutableStateOf(initialFontSize)
-    }
-    var shouldDraw: Boolean by remember {
-        mutableStateOf(false)
-    }
-    var fontSizeLowered: Boolean by remember {
-        mutableStateOf(false)
-    }
-    Text(
-        text = text,
-        fontSize = resizedFontSize,
-        onTextLayout = {result->
-           if (result.didOverflowHeight && !fontSizeLowered) {
-               resizedFontSize = 20.sp
-               fontSizeLowered = true
-           } else if (result.didOverflowHeight) {
-               resizedFontSize *= 0.95
-           } else shouldDraw = true
-        },
-        modifier = Modifier.drawWithContent { if (shouldDraw) drawContent() }
-    )
-}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PrimaryButtonsPanePreview() {
     PrimaryButtonsPane(
+        buttonsFontSize = ButtonsFontSize.Expanded,
         onClickAction = {_->},
         modifier = Modifier.fillMaxWidth()
     )
@@ -225,6 +220,7 @@ fun PrimaryButtonsPanePreview() {
 @Composable
 fun SecondaryButtonsPanePreview() {
     SecondaryButtonsPane(
+        buttonsFontSize = ButtonsFontSize.Expanded,
         onClickAction = {_->},
         modifier = Modifier.fillMaxWidth()
     )

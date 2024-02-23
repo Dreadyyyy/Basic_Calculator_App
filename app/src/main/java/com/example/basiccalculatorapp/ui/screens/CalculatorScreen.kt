@@ -20,9 +20,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.basiccalculatorapp.data.CalculatorButton
-import com.example.basiccalculatorapp.ui.screens.content.AutoResizedText
 import com.example.basiccalculatorapp.ui.screens.content.PrimaryButtonsPane
 import com.example.basiccalculatorapp.ui.screens.content.SecondaryButtonsPane
+import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 
 @Composable
@@ -30,6 +30,7 @@ fun CalculatorScreen(
     expression: String,
     result: String,
     buttonsPaneType: ButtonsPaneType,
+    buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit
 ) {
     Column(
@@ -38,14 +39,18 @@ fun CalculatorScreen(
     ) {
         Text(
             text = expression,
-            fontSize = 48.sp,
+            fontSize =
+                if (buttonsFontSize == ButtonsFontSize.Expanded) 48.sp
+                else 40.sp,
             modifier = Modifier
                 .weight(1F)
                 .align(Alignment.End)
         )
         Text(
             text = result,
-            fontSize = 36.sp,
+            fontSize =
+                if (buttonsFontSize == ButtonsFontSize.Expanded) 36.sp
+                else 28.sp,
             modifier = Modifier
                 .weight(1F)
                 .align(Alignment.End)
@@ -61,7 +66,7 @@ fun CalculatorScreen(
                     .padding(4.dp)
                     .height(44.dp)
             ) {
-                AutoResizedText(text = CalculatorButton.Backspace.buttonText, initialFontSize = 20.sp)
+                Text(text = CalculatorButton.Backspace.buttonText, fontSize = 20.sp)
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
@@ -70,12 +75,14 @@ fun CalculatorScreen(
         ) {
             if (buttonsPaneType == ButtonsPaneType.Expanded) {
                 SecondaryButtonsPane(
+                    buttonsFontSize = buttonsFontSize,
                     onClickAction = onClickAction,
                     modifier = Modifier.weight(1F)
                 )
                 Spacer(modifier = Modifier.width(16.dp))
             }
             PrimaryButtonsPane(
+                buttonsFontSize = buttonsFontSize,
                 onClickAction = onClickAction,
                 modifier = Modifier.weight(1F)
             )
@@ -83,13 +90,14 @@ fun CalculatorScreen(
     }
 }
 
-@Preview(showBackground = true, widthDp = 1000)
+@Preview(showBackground = true, widthDp = 1000, heightDp = 400)
 @Composable
 fun CalculatorScreenPreview() {
     CalculatorScreen(
         expression = "2 + 2 - 2 / 2 * 2",
         result = "2",
-        buttonsPaneType = ButtonsPaneType.Basic,
+        buttonsPaneType = ButtonsPaneType.Expanded,
+        buttonsFontSize = ButtonsFontSize.Compact,
         onClickAction = { _ -> }
     )
 }
