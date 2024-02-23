@@ -127,7 +127,7 @@ fun SecondaryButtonsPane(
             buttons = listOf(
                 "logₓy" to ("logB("),
                 "e" to "e",
-                "π" to "pi"
+                "π" to "π"
             ),
             modifier = Modifier.weight(1F)
         )

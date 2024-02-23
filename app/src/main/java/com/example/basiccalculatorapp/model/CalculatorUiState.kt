@@ -1,6 +1,6 @@
 package com.example.basiccalculatorapp.model
 
 data class CalculatorUiState(
-    val expression: String = "",
+    val shownExpression: String = "",
     val result: String = ""
 )

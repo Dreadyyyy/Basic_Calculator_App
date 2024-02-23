@@ -22,7 +22,7 @@ fun BasicCalculatorApp(
         else ButtonsPaneType.Expanded
 
     CalculatorScreen(
-        expression = calculatorUiState.value.expression,
+        expression = calculatorUiState.value.shownExpression,
         result = calculatorUiState.value.result,
         buttonsPaneType = buttonsPaneType,
         onClickAction = { symbol: String -> calculatorViewModel.onButtonPressed(symbol) }

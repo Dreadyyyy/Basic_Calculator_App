@@ -15,48 +15,67 @@ class CalculatorViewModel: ViewModel() {
         CalculatorUiState()
     )
         private set
+    private var shownExpressionAsStringList: MutableList<String> = mutableListOf()
+    private var evaluatedExpressionAsStringList: MutableList<String> = mutableListOf()
     fun onButtonPressed(symbol: String) {
-        var newExpression: String = calculatorUiState.value.expression
-        var newResult: String
+        var newResult: String = ""
+        var newShownExpression: String = ""
         when(symbol) {
             "=" -> {
-                newResult = evaluateExpression(newExpression)
-                newExpression = if (newResult != "") newResult else newExpression
+                newResult = evaluateExpression()
+                if (newResult != "") {
+                    shownExpressionAsStringList = mutableListOf(newResult)
+                    evaluatedExpressionAsStringList = mutableListOf(newResult)
+                }
+                newShownExpression = shownExpressionAsStringList.joinToString("")
                 newResult = ""
             }
             "C" -> {
-                newExpression = ""
+                shownExpressionAsStringList.clear()
+                evaluatedExpressionAsStringList.clear()
+                newShownExpression = ""
                 newResult = ""
             }
             "<-" -> {
-                newExpression = newExpression.slice(0..<newExpression.lastIndex)
-                newResult = evaluateExpression(newExpression)
+                shownExpressionAsStringList =
+                    shownExpressionAsStringList.slice(0..<shownExpressionAsStringList.lastIndex)
+                        .toMutableList()
+                evaluatedExpressionAsStringList =
+                    evaluatedExpressionAsStringList.slice(0..<evaluatedExpressionAsStringList.lastIndex)
+                        .toMutableList()
+                newShownExpression = shownExpressionAsStringList.joinToString("")
+                newResult = evaluateExpression()
             }
             else -> {
-                newExpression += symbol
-                newResult = evaluateExpression(newExpression)
+                shownExpressionAsStringList.add(symbol)
+                evaluatedExpressionAsStringList.add(symbol)
+                newShownExpression = shownExpressionAsStringList.joinToString("")
+                newResult = evaluateExpression()
             }
         }
-        updateCalculatorState(newExpression, newResult)
+        updateCalculatorState(newShownExpression, newResult)
     }
-    private fun updateCalculatorState(newExpression: String, newResult: String) {
+    private fun updateCalculatorState(newShownExpression: String, newResult: String) {
         calculatorUiState.update { currentState->
             currentState.copy(
-                expression = newExpression,
+                shownExpression = newShownExpression,
                 result = newResult
             )
         }
     }
-    private fun evaluateExpression(expression: String): String {
+    private fun evaluateExpression(): String {
+        val newExpression: String = evaluatedExpressionAsStringList.joinToString("")
         val logB: Function = object : Function("logB", 2) {
             override fun apply(vararg args: Double): Double {
                 return ln(args[1]) / ln(args[0])
             }
         }
         val result: String = try {
-            ExpressionBuilder(expression)
+            ExpressionBuilder(newExpression)
                 .function(logB)
+                .variable("π")
                 .build()
+                .setVariable("π", kotlin.math.PI)
                 .evaluate()
                 .toString()
         } catch (e: IllegalArgumentException) {
