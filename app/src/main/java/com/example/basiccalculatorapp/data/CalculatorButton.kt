@@ -15,7 +15,7 @@ sealed interface CalculatorButton {
     data object Clear: CalculatorButton {
         override val buttonText: String = "C"
     }
-    data object Backspace: CalculatorButton {
-        override val buttonText: String = "<-"
+    data object Delete: CalculatorButton {
+        override val buttonText: String = "del"
     }
 }

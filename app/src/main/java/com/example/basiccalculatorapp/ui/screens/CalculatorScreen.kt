@@ -60,13 +60,13 @@ fun CalculatorScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             Button(
-                onClick = { onClickAction(CalculatorButton.Backspace) },
+                onClick = { onClickAction(CalculatorButton.Delete) },
                 modifier = Modifier
                     .clip(CircleShape)
                     .padding(4.dp)
                     .height(44.dp)
             ) {
-                Text(text = CalculatorButton.Backspace.buttonText, fontSize = 20.sp)
+                Text(text = CalculatorButton.Delete.buttonText, fontSize = 20.sp)
             }
         }
         Spacer(modifier = Modifier.height(8.dp))

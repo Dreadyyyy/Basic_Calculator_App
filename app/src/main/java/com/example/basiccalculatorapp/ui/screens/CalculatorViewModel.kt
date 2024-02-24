@@ -1,6 +1,5 @@
 package com.example.basiccalculatorapp.ui.screens
 
-import androidx.compose.animation.core.updateTransition
 import androidx.lifecycle.ViewModel
 import com.example.basiccalculatorapp.data.CalculatorButton
 import com.example.basiccalculatorapp.model.CalculatorUiState
@@ -31,7 +30,7 @@ class CalculatorViewModel: ViewModel() {
             }
             is CalculatorButton.Equals -> onEqualsPressed()
             is CalculatorButton.Clear -> onClearPressed()
-            is CalculatorButton.Backspace -> onBackspacePressed()
+            is CalculatorButton.Delete -> onDeletePressed()
         }
         updateCalculatorState()
     }
@@ -52,7 +51,7 @@ class CalculatorViewModel: ViewModel() {
         expressionToEvaluateAsStringList.clear()
         updateCalculatorState()
     }
-    private fun onBackspacePressed() {
+    private fun onDeletePressed() {
         expressionToShowAsStringList = expressionToShowAsStringList
             .slice(0..<expressionToShowAsStringList.lastIndex)
             .toMutableList()
