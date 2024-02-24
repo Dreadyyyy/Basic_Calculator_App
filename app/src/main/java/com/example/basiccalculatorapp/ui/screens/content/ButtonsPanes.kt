@@ -152,7 +152,7 @@ fun SecondaryButtonsPane(
                 ),
                 CalculatorButton.MathematicalFunction(
                     "ln",
-                    "log(",
+                    "ln(",
                     "log("
                 )
             ),
