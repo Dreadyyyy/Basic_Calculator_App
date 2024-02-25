@@ -2,6 +2,22 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="CalculatorViewModelTest">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\ASUS\.android\avd\Resizable_Experimental_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-25T22:36:37.837407200Z" />
+        </State>
+      </entry>
       <entry key="MainActivity">
         <State>
           <targetSelectedWithDropDown>
@@ -26,13 +42,16 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\ASUS\.android\avd\Pixel_7_Pro_API_30.avd" />
+                  <value value="C:\Users\ASUS\.android\avd\Resizable_Experimental_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-22T07:46:40.540146800Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-25T22:37:45.961441900Z" />
         </State>
+      </entry>
+      <entry key="calculatorViewModel_functionsEntered_expressionAndResultChangedExpectedly()">
+        <State />
       </entry>
     </value>
   </component>
