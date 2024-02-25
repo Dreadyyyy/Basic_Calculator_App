@@ -8,11 +8,11 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.basiccalculatorapp.data.CalculatorButton
-import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 import com.example.basiccalculatorapp.model.CalculatorUiState
 import com.example.basiccalculatorapp.ui.screens.CalculatorScreen
 import com.example.basiccalculatorapp.ui.screens.CalculatorViewModel
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
+import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 
 @Composable
 fun BasicCalculatorApp(
@@ -20,12 +20,18 @@ fun BasicCalculatorApp(
     windowSizeClass: WindowSizeClass
 ) {
     val calculatorUiState: State<CalculatorUiState> = calculatorViewModel.calculatorUiState.collectAsState()
-    val buttonsPaneType: ButtonsPaneType =
-        if (windowSizeClass.widthSizeClass == WindowWidthSizeClass.Compact) ButtonsPaneType.Basic
-        else ButtonsPaneType.Expanded
-    val buttonsFontSize: ButtonsFontSize =
-        if (windowSizeClass.heightSizeClass == WindowHeightSizeClass.Compact) ButtonsFontSize.Compact
-        else ButtonsFontSize.Expanded
+    val buttonsPaneType: ButtonsPaneType = when(windowSizeClass.widthSizeClass) {
+        WindowWidthSizeClass.Compact -> ButtonsPaneType.Compact
+        WindowWidthSizeClass.Medium -> ButtonsPaneType.Medium
+        WindowWidthSizeClass.Expanded -> ButtonsPaneType.Expanded
+        else -> ButtonsPaneType.Compact
+    }
+    val buttonsFontSize: ButtonsFontSize = when(windowSizeClass.heightSizeClass) {
+        WindowHeightSizeClass.Compact -> ButtonsFontSize.Compact
+        WindowHeightSizeClass.Medium -> ButtonsFontSize.Medium
+        WindowHeightSizeClass.Expanded -> ButtonsFontSize.Expanded
+        else -> ButtonsFontSize.Compact
+    }
     CalculatorScreen(
         expression = calculatorUiState.value.shownExpression,
         result = calculatorUiState.value.result,

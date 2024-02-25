@@ -20,8 +20,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.basiccalculatorapp.data.CalculatorButton
-import com.example.basiccalculatorapp.ui.screens.content.PrimaryButtonsPane
-import com.example.basiccalculatorapp.ui.screens.content.SecondaryButtonsPane
+import com.example.basiccalculatorapp.data.CalculatorButtonType
+import com.example.basiccalculatorapp.ui.screens.content.CompactButtonsPane
+import com.example.basiccalculatorapp.ui.screens.content.ExpandedButtonsPane
+import com.example.basiccalculatorapp.ui.screens.content.MediumButtonsPane
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 
@@ -66,26 +68,37 @@ fun CalculatorScreen(
                     .padding(4.dp)
                     .height(44.dp)
             ) {
-                Text(text = CalculatorButton.Delete.buttonText, fontSize = 20.sp)
+                Text(text = CalculatorButtonType.Delete.buttonText, fontSize = 20.sp)
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
         Row(
             modifier = Modifier.weight(4F)
         ) {
-            if (buttonsPaneType == ButtonsPaneType.Expanded) {
-                SecondaryButtonsPane(
-                    buttonsFontSize = buttonsFontSize,
-                    onClickAction = onClickAction,
-                    modifier = Modifier.weight(1F)
-                )
-                Spacer(modifier = Modifier.width(16.dp))
+            when(buttonsPaneType) {
+                ButtonsPaneType.Compact -> {
+                    CompactButtonsPane(
+                        buttonsFontSize = buttonsFontSize,
+                        onClickAction = onClickAction,
+                        modifier = Modifier.weight(1F)
+                    )
+                }
+                ButtonsPaneType.Medium -> {
+                    MediumButtonsPane(
+                        buttonsFontSize = buttonsFontSize,
+                        onClickAction = onClickAction,
+                        modifier = Modifier.weight(1F)
+                    )
+                }
+                ButtonsPaneType.Expanded -> {
+                    ExpandedButtonsPane(
+                        buttonsFontSize = buttonsFontSize,
+                        onClickAction = onClickAction,
+                        modifier = Modifier.weight(1F)
+                    )
+                    Spacer(modifier = Modifier.width(16.dp))
+                }
             }
-            PrimaryButtonsPane(
-                buttonsFontSize = buttonsFontSize,
-                onClickAction = onClickAction,
-                modifier = Modifier.weight(1F)
-            )
         }
     }
 }

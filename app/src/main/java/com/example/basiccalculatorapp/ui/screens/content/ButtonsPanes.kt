@@ -3,7 +3,6 @@ package com.example.basiccalculatorapp.ui.screens.content
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,23 +10,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.basiccalculatorapp.data.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 
 @Composable
-fun PrimaryButtonsPane(
+fun CompactButtonsPane(
     buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
@@ -37,14 +30,19 @@ fun PrimaryButtonsPane(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+        val basicButtonModifier: Modifier = Modifier
+            .clip(CircleShape)
+            .fillMaxHeight()
+            .padding(4.dp)
+            .weight(1F)
         RowOfButtons(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Clear,
-                CalculatorButton.Symbol("("),
-                CalculatorButton.Symbol(")"),
-                CalculatorButton.Symbol("+"),
+                CalculatorButton.Clear to basicButtonModifier,
+                CalculatorButton.OpeningBracket to basicButtonModifier,
+                CalculatorButton.ClosingBracket to basicButtonModifier,
+                CalculatorButton.Plus to basicButtonModifier,
             ),
             modifier = Modifier
                 .weight(1F)
@@ -54,10 +52,10 @@ fun PrimaryButtonsPane(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Symbol("1"),
-                CalculatorButton.Symbol("2"),
-                CalculatorButton.Symbol("3"),
-                CalculatorButton.Symbol("-"),
+                CalculatorButton.One to basicButtonModifier,
+                CalculatorButton.Two to basicButtonModifier,
+                CalculatorButton.Three to basicButtonModifier,
+                CalculatorButton.Minus to basicButtonModifier,
             ),
             modifier = Modifier
                 .weight(1F)
@@ -67,10 +65,10 @@ fun PrimaryButtonsPane(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Symbol("4"),
-                CalculatorButton.Symbol("5"),
-                CalculatorButton.Symbol("6"),
-                CalculatorButton.Symbol("*"),
+                CalculatorButton.Four to basicButtonModifier,
+                CalculatorButton.Five to basicButtonModifier,
+                CalculatorButton.Six to basicButtonModifier,
+                CalculatorButton.Multiply to basicButtonModifier,
             ),
             modifier = Modifier
                 .weight(1F)
@@ -80,10 +78,10 @@ fun PrimaryButtonsPane(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Symbol("7"),
-                CalculatorButton.Symbol("8"),
-                CalculatorButton.Symbol("9"),
-                CalculatorButton.Symbol("/"),
+                CalculatorButton.Seven to basicButtonModifier,
+                CalculatorButton.Eight to basicButtonModifier,
+                CalculatorButton.Nine to basicButtonModifier,
+                CalculatorButton.Divide to basicButtonModifier,
             ),
             modifier = Modifier
                 .weight(1F)
@@ -93,10 +91,10 @@ fun PrimaryButtonsPane(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Symbol("."),
-                CalculatorButton.Symbol("0"),
-                CalculatorButton.Symbol(","),
-                CalculatorButton.Equals
+                CalculatorButton.Period to basicButtonModifier,
+                CalculatorButton.Zero to basicButtonModifier,
+                CalculatorButton.Comma to basicButtonModifier,
+                CalculatorButton.Equals to basicButtonModifier,
             ),
             modifier = Modifier
                 .weight(1F)
@@ -106,71 +104,187 @@ fun PrimaryButtonsPane(
 }
 
 @Composable
-fun SecondaryButtonsPane(
+fun ExpandedButtonsPane(
     buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
     Column(
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier
     ) {
+        val basicButtonModifier: Modifier = Modifier
+            .clip(CircleShape)
+            .fillMaxHeight()
+            .padding(4.dp)
+            .weight(1F)
+        val biggerButtonModifier: Modifier = Modifier
+            .clip(CircleShape)
+            .fillMaxHeight()
+            .padding(4.dp)
+            .weight(2F)
         RowOfButtons(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.MathematicalFunction(
-                    "sin",
-                    "sin(",
-                    "sin("
-                ),
-                CalculatorButton.MathematicalFunction(
-                    "cos",
-                    "cos(",
-                    "cos("
-                ),
-                CalculatorButton.MathematicalFunction(
-                    "tan",
-                    "tan(",
-                    "tan("
-                ),
+                CalculatorButton.Clear to basicButtonModifier,
+                CalculatorButton.E to basicButtonModifier,
+                CalculatorButton.Pi to basicButtonModifier,
+                CalculatorButton.Factorial to basicButtonModifier,
+                CalculatorButton.One to basicButtonModifier,
+                CalculatorButton.Two to basicButtonModifier,
+                CalculatorButton.Three to basicButtonModifier,
+                CalculatorButton.Plus to basicButtonModifier,
             ),
-            modifier = Modifier.weight(1F)
-            )
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
         RowOfButtons(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.MathematicalFunction(
-                    "sqrt",
-                    "sqrt(",
-                    "sqrt("
-                ),
-                CalculatorButton.MathematicalFunction(
-                    "xʸ",
-                    "^(",
-                    "^("
-                ),
-                CalculatorButton.MathematicalFunction(
-                    "ln",
-                    "ln(",
-                    "log("
-                )
+                CalculatorButton.OpeningBracket to basicButtonModifier,
+                CalculatorButton.Sin to basicButtonModifier,
+                CalculatorButton.Cos to basicButtonModifier,
+                CalculatorButton.Tan to basicButtonModifier,
+                CalculatorButton.Four to basicButtonModifier,
+                CalculatorButton.Five to basicButtonModifier,
+                CalculatorButton.Six to basicButtonModifier,
+                CalculatorButton.Minus to basicButtonModifier,
             ),
-            modifier = Modifier.weight(1F)
-            )
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
         RowOfButtons(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.MathematicalFunction(
-                    "logₓy",
-                    "logₓy(",
-                    "logB("
-                ),
-                CalculatorButton.Symbol("e"),
-                CalculatorButton.Symbol("π")
+                CalculatorButton.ClosingBracket to basicButtonModifier,
+                CalculatorButton.PowerOf to basicButtonModifier,
+                CalculatorButton.Sqrt to basicButtonModifier,
+                CalculatorButton.Log to basicButtonModifier,
+                CalculatorButton.Seven to basicButtonModifier,
+                CalculatorButton.Eight to basicButtonModifier,
+                CalculatorButton.Nine to basicButtonModifier,
+                CalculatorButton.Multiply to basicButtonModifier,
             ),
-            modifier = Modifier.weight(1F)
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.Equals to biggerButtonModifier,
+                CalculatorButton.Ln to basicButtonModifier,
+                CalculatorButton.Comma to basicButtonModifier,
+                CalculatorButton.Zero to biggerButtonModifier,
+                CalculatorButton.Period to basicButtonModifier,
+                CalculatorButton.Divide to basicButtonModifier,
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+    }
+}
+
+@Composable
+fun MediumButtonsPane(
+    buttonsFontSize: ButtonsFontSize,
+    onClickAction: (CalculatorButton) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        verticalArrangement = Arrangement.Bottom,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+    ) {
+        val basicButtonModifier: Modifier = Modifier
+            .clip(CircleShape)
+            .fillMaxHeight()
+            .padding(4.dp)
+            .weight(1F)
+        val biggerButtonModifier: Modifier = Modifier
+            .clip(CircleShape)
+            .fillMaxHeight()
+            .padding(4.dp)
+            .weight(2F)
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.Clear to biggerButtonModifier,
+                CalculatorButton.OpeningBracket to biggerButtonModifier,
+                CalculatorButton.ClosingBracket to biggerButtonModifier
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.Sin to basicButtonModifier,
+                CalculatorButton.Cos to basicButtonModifier,
+                CalculatorButton.One to basicButtonModifier,
+                CalculatorButton.Two to basicButtonModifier,
+                CalculatorButton.Three to basicButtonModifier,
+                CalculatorButton.Plus to basicButtonModifier
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.Tan to basicButtonModifier,
+                CalculatorButton.PowerOf to basicButtonModifier,
+                CalculatorButton.Four to basicButtonModifier,
+                CalculatorButton.Five to basicButtonModifier,
+                CalculatorButton.Six to basicButtonModifier,
+                CalculatorButton.Minus to basicButtonModifier
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.PowerOf to basicButtonModifier,
+                CalculatorButton.Log to basicButtonModifier,
+                CalculatorButton.Seven to basicButtonModifier,
+                CalculatorButton.Eight to basicButtonModifier,
+                CalculatorButton.Nine to basicButtonModifier,
+                CalculatorButton.Multiply to basicButtonModifier
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
+        )
+        RowOfButtons(
+            buttonsFontSize = buttonsFontSize,
+            onClickAction = onClickAction,
+            buttons = listOf(
+                CalculatorButton.Ln to basicButtonModifier,
+                CalculatorButton.Factorial to basicButtonModifier,
+                CalculatorButton.Comma to basicButtonModifier,
+                CalculatorButton.Zero to biggerButtonModifier,
+                CalculatorButton.Period to basicButtonModifier,
+                CalculatorButton.Divide to basicButtonModifier
+            ),
+            modifier = Modifier
+                .weight(1F)
+                .fillMaxHeight()
         )
     }
 }
@@ -178,7 +292,7 @@ fun SecondaryButtonsPane(
 fun RowOfButtons(
     buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
-    buttons: List<CalculatorButton>,
+    buttons: List<Pair<CalculatorButton, Modifier>>,
     modifier: Modifier = Modifier
 ) {
     Row(
@@ -186,20 +300,18 @@ fun RowOfButtons(
         horizontalArrangement = Arrangement.Center,
         modifier = modifier.fillMaxWidth()
     ) {
-        buttons.forEach { button: CalculatorButton->
+        buttons.forEach { (button: CalculatorButton, localModifier: Modifier)->
             Button(
                 onClick = { onClickAction(button) },
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .weight(1F)
-                    .fillMaxHeight()
-                    .padding(4.dp)
+                modifier = localModifier
             ) {
                 Text(
-                    text = button.buttonText,
-                    fontSize =
-                        if (buttonsFontSize == ButtonsFontSize.Expanded) 32.sp
-                        else 12.sp
+                    text = button.calculatorButtonType.buttonText,
+                    fontSize = when(buttonsFontSize) {
+                        ButtonsFontSize.Compact -> 16.sp
+                        ButtonsFontSize.Medium -> 20.sp
+                        ButtonsFontSize.Expanded -> 32.sp
+                    }
                 )
             }
         }
@@ -210,7 +322,7 @@ fun RowOfButtons(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun PrimaryButtonsPanePreview() {
-    PrimaryButtonsPane(
+    CompactButtonsPane(
         buttonsFontSize = ButtonsFontSize.Expanded,
         onClickAction = {_->},
         modifier = Modifier.fillMaxWidth()
@@ -219,7 +331,7 @@ fun PrimaryButtonsPanePreview() {
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun SecondaryButtonsPanePreview() {
-    SecondaryButtonsPane(
+    ExpandedButtonsPane(
         buttonsFontSize = ButtonsFontSize.Expanded,
         onClickAction = {_->},
         modifier = Modifier.fillMaxWidth()

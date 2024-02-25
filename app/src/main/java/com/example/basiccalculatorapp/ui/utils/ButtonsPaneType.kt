@@ -1,6 +1,7 @@
 package com.example.basiccalculatorapp.ui.utils
 
 enum class ButtonsPaneType {
-    Basic,
+    Compact,
+    Medium,
     Expanded
 }

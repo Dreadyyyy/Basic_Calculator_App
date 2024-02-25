@@ -2,11 +2,13 @@ package com.example.basiccalculatorapp.ui.screens
 
 import androidx.lifecycle.ViewModel
 import com.example.basiccalculatorapp.data.CalculatorButton
+import com.example.basiccalculatorapp.data.CalculatorButtonType
 import com.example.basiccalculatorapp.model.CalculatorUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
+import net.objecthunter.exp4j.operator.Operator
 import java.lang.ArithmeticException
 import java.lang.IllegalArgumentException
 import kotlin.math.ln
@@ -19,18 +21,22 @@ class CalculatorViewModel: ViewModel() {
     private var expressionToShowAsStringList: MutableList<String> = mutableListOf()
     private var expressionToEvaluateAsStringList: MutableList<String> = mutableListOf()
     fun onButtonPressed(button: CalculatorButton) {
-        when(button) {
-            is CalculatorButton.Symbol -> {
-                expressionToShowAsStringList.add(button.buttonText)
-                expressionToEvaluateAsStringList.add(button.buttonText)
+        when(button.calculatorButtonType) {
+            is CalculatorButtonType.Symbol -> {
+                expressionToShowAsStringList.add(button.calculatorButtonType.buttonText)
+                expressionToEvaluateAsStringList.add(button.calculatorButtonType.buttonText)
             }
-            is CalculatorButton.MathematicalFunction -> {
-                expressionToShowAsStringList.add(button.expressionToShow)
-                expressionToEvaluateAsStringList.add(button.expressionToEvaluate)
+            is CalculatorButtonType.Operator -> {
+                expressionToShowAsStringList.add(button.calculatorButtonType.buttonText)
+                expressionToEvaluateAsStringList.add(button.calculatorButtonType.expressionToEvaluate)
             }
-            is CalculatorButton.Equals -> onEqualsPressed()
-            is CalculatorButton.Clear -> onClearPressed()
-            is CalculatorButton.Delete -> onDeletePressed()
+            is CalculatorButtonType.MathematicalFunction -> {
+                expressionToShowAsStringList.add(button.calculatorButtonType.expressionToShow)
+                expressionToEvaluateAsStringList.add(button.calculatorButtonType.expressionToEvaluate)
+            }
+            is CalculatorButtonType.Equals -> onEqualsPressed()
+            is CalculatorButtonType.Clear -> onClearPressed()
+            is CalculatorButtonType.Delete -> onDeletePressed()
         }
         updateCalculatorState()
     }
@@ -71,14 +77,10 @@ class CalculatorViewModel: ViewModel() {
     }
     private fun evaluateExpression(): String {
         val newExpression: String = expressionToEvaluateAsStringList.joinToString("")
-        val logB: Function = object : Function("logB", 2) {
-            override fun apply(vararg args: Double): Double {
-                return ln(args[1]) / ln(args[0])
-            }
-        }
         val result: String = try {
             ExpressionBuilder(newExpression)
                 .function(logB)
+                .operator(factorial)
                 .variable("π")
                 .build()
                 .setVariable("π", kotlin.math.PI)
@@ -90,5 +92,32 @@ class CalculatorViewModel: ViewModel() {
             ""
         }
         return if (result != "NaN") result else ""
+    }
+    private companion object {
+        private val factorial: Operator = object : Operator(
+            "!",
+            1,
+            true,
+            Operator.PRECEDENCE_POWER + 1
+        ) {
+            override fun apply(vararg p0: Double): Double {
+                val arg: Int = p0[0].toInt()
+                if (arg.toDouble() != p0[0]) {
+                    throw IllegalArgumentException("The operand for factorial has to be an integer")
+                }
+                if (arg <= 0) {
+                    throw IllegalArgumentException("The operand for factorial has to be grater than zero")
+                }
+                var result: Double = 1.0
+                (2..arg).forEach { result *= it}
+                return result
+            }
+        }
+
+        private val logB: Function = object : Function("logB", 2) {
+            override fun apply(vararg args: Double): Double {
+                return ln(args[1]) / ln(args[0])
+            }
+        }
     }
 }
