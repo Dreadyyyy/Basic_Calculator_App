@@ -2,6 +2,7 @@ package com.example.basiccalculatorapp.ui.screens
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,11 +34,14 @@ fun CalculatorScreen(
     result: String,
     buttonsPaneType: ButtonsPaneType,
     buttonsFontSize: ButtonsFontSize,
-    onClickAction: (CalculatorButton) -> Unit
+    onClickAction: (CalculatorButton) -> Unit,
+    contentPadding: PaddingValues
 ) {
     Column(
         verticalArrangement = Arrangement.Bottom,
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
     ) {
         Text(
             text = expression,
@@ -111,6 +115,7 @@ fun CalculatorScreenPreview() {
         result = "2",
         buttonsPaneType = ButtonsPaneType.Expanded,
         buttonsFontSize = ButtonsFontSize.Compact,
-        onClickAction = { _ -> }
+        onClickAction = { _ -> },
+        contentPadding = PaddingValues(0.dp)
     )
 }
