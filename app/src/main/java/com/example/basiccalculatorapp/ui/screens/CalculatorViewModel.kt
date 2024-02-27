@@ -1,14 +1,11 @@
 package com.example.basiccalculatorapp.ui.screens
 
-import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
-import com.example.basiccalculatorapp.data.CalculatorButton
-import com.example.basiccalculatorapp.data.CalculatorButtonType
+import com.example.basiccalculatorapp.ui.utils.CalculatorButton
+import com.example.basiccalculatorapp.ui.utils.CalculatorButtonType
 import com.example.basiccalculatorapp.data.CalculatorUiState
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
 import net.objecthunter.exp4j.operator.Operator

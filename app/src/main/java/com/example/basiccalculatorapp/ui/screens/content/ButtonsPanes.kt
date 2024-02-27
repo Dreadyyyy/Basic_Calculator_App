@@ -16,7 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.basiccalculatorapp.data.CalculatorButton
+import com.example.basiccalculatorapp.ui.utils.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 import com.example.compose.BasicCalculatorAppTheme
 

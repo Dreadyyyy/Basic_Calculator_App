@@ -13,24 +13,33 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.basiccalculatorapp.data.CalculatorButton
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.basiccalculatorapp.data.CalculatorUiState
+import com.example.basiccalculatorapp.data.HistoryUiState
 import com.example.basiccalculatorapp.ui.screens.CalculatorScreen
 import com.example.basiccalculatorapp.ui.screens.CalculatorViewModel
+import com.example.basiccalculatorapp.ui.screens.HistoryScreen
+import com.example.basiccalculatorapp.ui.screens.content.HistoryViewModel
+import com.example.basiccalculatorapp.ui.utils.ApplicationScreen
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun BasicCalculatorApp(
+    navHostController: NavHostController = rememberNavController(),
     calculatorViewModel: CalculatorViewModel = viewModel(),
+    historyViewModel: HistoryViewModel = viewModel(),
     windowSizeClass: WindowSizeClass
 ) {
     val calculatorUiState: State<CalculatorUiState> =
         calculatorViewModel.calculatorUiState.collectAsState()
+    val historyUiState: State<HistoryUiState> =
+        historyViewModel.historyUiState.collectAsState()
     val buttonsPaneType: ButtonsPaneType = when (windowSizeClass.widthSizeClass) {
         WindowWidthSizeClass.Compact -> ButtonsPaneType.Compact
         WindowWidthSizeClass.Medium -> ButtonsPaneType.Medium
@@ -49,28 +58,30 @@ fun BasicCalculatorApp(
             SnackbarHost(hostState = snackbarHostState)
         }
     ) { innerPadding ->
-        if (calculatorUiState.value.snackbarMessage != "") {
-            LaunchedEffect(calculatorUiState.value.snackbarMessage) {
-                launch {
-                    val result: SnackbarResult = snackbarHostState.showSnackbar(
-                        calculatorUiState.value.snackbarMessage,
-                        actionLabel = "Dismiss",
-                        duration = SnackbarDuration.Short
-                    )
-                    when (result) {
-                        SnackbarResult.ActionPerformed -> calculatorViewModel.dismissSnackbar()
-                        SnackbarResult.Dismissed -> calculatorViewModel.dismissSnackbar()
-                    }
-                }
+        NavHost(
+            navController = navHostController,
+            startDestination = ApplicationScreen.Calculator.name
+        ) {
+            composable(route = ApplicationScreen.Calculator.name) {
+                CalculatorScreen(
+                    expression = calculatorUiState.value.shownExpression,
+                    result = calculatorUiState.value.result,
+                    snackbarHostState = snackbarHostState,
+                    snackbarMessage = calculatorUiState.value.snackbarMessage,
+                    dismissSnackbar = calculatorViewModel::dismissSnackbar,
+                    buttonsPaneType = buttonsPaneType,
+                    buttonsFontSize = buttonsFontSize,
+                    onClickAction = calculatorViewModel::onButtonPressed,
+                    navigateToHistoryScreen = { navHostController.navigate(ApplicationScreen.History.name)},
+                    contentPadding = innerPadding
+                )
+            }
+            composable(route = ApplicationScreen.History.name) {
+                HistoryScreen(
+                    navigateUp = { navHostController.navigateUp() },
+                    historyUiState = historyUiState.value
+                )
             }
         }
-        CalculatorScreen(
-            expression = calculatorUiState.value.shownExpression,
-            result = calculatorUiState.value.result,
-            buttonsPaneType = buttonsPaneType,
-            buttonsFontSize = buttonsFontSize,
-            onClickAction = calculatorViewModel::onButtonPressed,
-            contentPadding = innerPadding
-        )
     }
 }

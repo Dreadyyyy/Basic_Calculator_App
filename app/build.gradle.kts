@@ -63,6 +63,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("net.objecthunter:exp4j:0.4.8")
     implementation("androidx.compose.material3:material3-window-size-class")
+    implementation("androidx.navigation:navigation-compose:2.7.0")
 
 
     testImplementation("junit:junit:4.13.2")

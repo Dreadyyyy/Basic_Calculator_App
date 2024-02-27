@@ -1,4 +1,4 @@
-package com.example.basiccalculatorapp.data
+package com.example.basiccalculatorapp.ui.utils
 
 sealed interface CalculatorButtonType {
     val buttonText: String
