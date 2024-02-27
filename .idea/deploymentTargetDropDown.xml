@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\ASUS\.android\avd\Resizable_Experimental_API_34.avd" />
+                  <value value="C:\Users\ASUS\.android\avd\Pixel_7_Pro_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-25T22:36:37.837407200Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-27T15:58:22.778011900Z" />
         </State>
       </entry>
       <entry key="MainActivity">
@@ -42,12 +42,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\ASUS\.android\avd\Pixel_7_Pro_API_30.avd" />
+                  <value value="C:\Users\ASUS\.android\avd\Pixel_Tablet_API_30.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-26T13:15:30.893175200Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-27T18:34:07.116771700Z" />
         </State>
       </entry>
       <entry key="calculatorViewModel_functionsEntered_expressionAndResultChangedExpectedly()">

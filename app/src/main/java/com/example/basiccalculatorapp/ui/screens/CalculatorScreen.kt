@@ -96,7 +96,6 @@ fun CalculatorScreen(
                 }
                 ButtonsPaneType.Expanded -> {
                     ExpandedButtonsPane(
-                        buttonsFontSize = buttonsFontSize,
                         onClickAction = onClickAction,
                         modifier = Modifier.weight(1F)
                     )

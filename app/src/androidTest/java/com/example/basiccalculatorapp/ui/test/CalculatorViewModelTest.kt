@@ -4,18 +4,23 @@ import com.example.basiccalculatorapp.data.CalculatorButton
 import com.example.basiccalculatorapp.data.CalculatorUiState
 import com.example.basiccalculatorapp.ui.screens.CalculatorViewModel
 import junit.framework.TestCase.assertEquals
+import kotlinx.coroutines.runBlocking
 import org.junit.Test
 
 class CalculatorViewModelTest {
     private val viewModel: CalculatorViewModel = CalculatorViewModel()
 
+
     @Test
-    fun calculatorViewModel_triedToEvaluateInvalidExpression_expressionAndResultUnchanged() {
+    fun calculatorViewModel_triedToEvaluateInvalidExpression_expressionAndResultUnchangedErrorMessageUpdated() {
         viewModel.onButtonPressed(CalculatorButton.Two)
         viewModel.onButtonPressed(CalculatorButton.Divide)
         viewModel.onButtonPressed(CalculatorButton.Zero)
         viewModel.onButtonPressed(CalculatorButton.Equals)
-        assertEquals(CalculatorUiState("2÷0", ""), viewModel.calculatorUiState.value)
+        assertEquals(
+            CalculatorUiState("2÷0", "", true, "Division by zero!"),
+            viewModel.calculatorUiState.value
+        )
     }
 
     @Test
@@ -32,6 +37,9 @@ class CalculatorViewModelTest {
         viewModel.onButtonPressed(CalculatorButton.Comma)
         viewModel.onButtonPressed(CalculatorButton.Four)
         viewModel.onButtonPressed(CalculatorButton.ClosingBracket)
-        assertEquals(CalculatorUiState("logₓy(ln(sqrt(e^(4))),4)", "2.0"), viewModel.calculatorUiState.value)
+        assertEquals(
+            CalculatorUiState("logₓy(ln(sqrt(e^(4))),4)", "2.0"),
+            viewModel.calculatorUiState.value
+        )
     }
 }
