@@ -1,4 +1,4 @@
-package com.example.basiccalculatorapp.data
+package com.example.basiccalculatorapp.ui.screens.calculator
 
 data class CalculatorUiState(
     val shownExpression: String = "",

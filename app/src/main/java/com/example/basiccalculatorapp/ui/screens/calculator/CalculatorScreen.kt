@@ -1,4 +1,4 @@
-package com.example.basiccalculatorapp.ui.screens
+package com.example.basiccalculatorapp.ui.screens.calculator
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -26,9 +26,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.basiccalculatorapp.ui.utils.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.CalculatorButtonType
-import com.example.basiccalculatorapp.ui.screens.content.CompactButtonsPane
-import com.example.basiccalculatorapp.ui.screens.content.ExpandedButtonsPane
-import com.example.basiccalculatorapp.ui.screens.content.MediumButtonsPane
+import com.example.basiccalculatorapp.ui.screens.calculator.content.CompactButtonsPane
+import com.example.basiccalculatorapp.ui.screens.calculator.content.ExpandedButtonsPane
+import com.example.basiccalculatorapp.ui.screens.calculator.content.MediumButtonsPane
 import com.example.basiccalculatorapp.ui.utils.ButtonsFontSize
 import com.example.basiccalculatorapp.ui.utils.ButtonsPaneType
 import kotlinx.coroutines.launch
@@ -131,6 +131,7 @@ fun CalculatorScreen(
 
                 ButtonsPaneType.Expanded -> {
                     ExpandedButtonsPane(
+                        buttonsFontSize = buttonsFontSize,
                         onClickAction = onClickAction,
                         modifier = Modifier.weight(1F)
                     )

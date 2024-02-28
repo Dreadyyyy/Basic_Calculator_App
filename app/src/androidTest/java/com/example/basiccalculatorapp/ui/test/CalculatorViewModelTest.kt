@@ -1,8 +1,8 @@
 package com.example.basiccalculatorapp.ui.test
 
 import com.example.basiccalculatorapp.ui.utils.CalculatorButton
-import com.example.basiccalculatorapp.data.CalculatorUiState
-import com.example.basiccalculatorapp.ui.screens.CalculatorViewModel
+import com.example.basiccalculatorapp.ui.screens.calculator.CalculatorUiState
+import com.example.basiccalculatorapp.ui.screens.calculator.CalculatorViewModel
 import junit.framework.TestCase.assertEquals
 import org.junit.Test
 

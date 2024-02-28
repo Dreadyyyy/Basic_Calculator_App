@@ -1,9 +1,9 @@
-package com.example.basiccalculatorapp.ui.screens
+package com.example.basiccalculatorapp.ui.screens.calculator
 
 import androidx.lifecycle.ViewModel
+import com.example.basiccalculatorapp.data.ExpressionsRepository
 import com.example.basiccalculatorapp.ui.utils.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.CalculatorButtonType
-import com.example.basiccalculatorapp.data.CalculatorUiState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import net.objecthunter.exp4j.ExpressionBuilder
@@ -11,7 +11,7 @@ import net.objecthunter.exp4j.function.Function
 import net.objecthunter.exp4j.operator.Operator
 import kotlin.math.ln
 
-class CalculatorViewModel : ViewModel() {
+class CalculatorViewModel(private val expressionsRepository: ExpressionsRepository) : ViewModel() {
     var calculatorUiState: MutableStateFlow<CalculatorUiState> = MutableStateFlow(
         CalculatorUiState()
     )

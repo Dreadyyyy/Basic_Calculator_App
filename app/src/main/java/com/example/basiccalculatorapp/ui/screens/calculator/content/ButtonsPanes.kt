@@ -1,4 +1,4 @@
-package com.example.basiccalculatorapp.ui.screens.content
+package com.example.basiccalculatorapp.ui.screens.calculator.content
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -204,6 +204,7 @@ fun MediumButtonsPane(
 
 @Composable
 fun ExpandedButtonsPane(
+    buttonsFontSize: ButtonsFontSize,
     onClickAction: (CalculatorButton) -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -223,7 +224,7 @@ fun ExpandedButtonsPane(
             .padding(4.dp)
             .weight(2F)
         RowOfButtons(
-            buttonsFontSize = ButtonsFontSize.Expanded,
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Clear to basicButtonModifier,
@@ -240,7 +241,7 @@ fun ExpandedButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
-            buttonsFontSize = ButtonsFontSize.Expanded,
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.OpeningBracket to basicButtonModifier,
@@ -257,7 +258,7 @@ fun ExpandedButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
-            buttonsFontSize = ButtonsFontSize.Expanded,
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.ClosingBracket to basicButtonModifier,
@@ -274,7 +275,7 @@ fun ExpandedButtonsPane(
                 .fillMaxHeight()
         )
         RowOfButtons(
-            buttonsFontSize = ButtonsFontSize.Expanded,
+            buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
                 CalculatorButton.Equals to biggerButtonModifier,
@@ -314,7 +315,7 @@ fun RowOfButtons(
                     fontSize = when (buttonsFontSize) {
                         ButtonsFontSize.Compact -> 16.sp
                         ButtonsFontSize.Medium -> 20.sp
-                        ButtonsFontSize.Expanded -> 32.sp
+                        ButtonsFontSize.Expanded -> 24.sp
                     }
                 )
             }
@@ -352,6 +353,7 @@ fun MediumButtonsPanePreview() {
 fun ExpandedButtonsPanePreview() {
     BasicCalculatorAppTheme {
         ExpandedButtonsPane(
+            buttonsFontSize = ButtonsFontSize.Expanded,
             onClickAction = { _ -> },
             modifier = Modifier.fillMaxWidth()
         )
