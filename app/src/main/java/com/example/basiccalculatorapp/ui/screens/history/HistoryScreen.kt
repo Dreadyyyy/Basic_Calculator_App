@@ -1,5 +1,6 @@
 package com.example.basiccalculatorapp.ui.screens.history
 
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,7 +13,11 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.sp
+import com.example.basiccalculatorapp.data.ExpressionEntity
+
 
 @Composable
 fun HistoryScreen(
@@ -21,15 +26,21 @@ fun HistoryScreen(
 ) {
     Scaffold(
         topBar = { HistoryTopAppBar(navigateUp) }
-    ) {contentPadding->
+    ) { contentPadding ->
         LazyColumn(
-            modifier = Modifier.padding(contentPadding)
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .padding(contentPadding)
+                .fillMaxSize()
         ) {
             items(
                 historyUiState.expressions,
-                { expression: String -> expression.hashCode() }
-            ) { expression: String ->
-                Text(text = expression)
+                { expression: ExpressionEntity -> expression.hashCode() }
+            ) { expression: ExpressionEntity ->
+                Text(
+                    text = "${expression.expression}=${expression.result}",
+                    fontSize = 24.sp
+                )
             }
         }
     }

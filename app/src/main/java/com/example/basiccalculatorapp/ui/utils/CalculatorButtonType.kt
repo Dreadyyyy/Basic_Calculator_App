@@ -45,7 +45,7 @@ enum class CalculatorButton(val calculatorButtonType: CalculatorButtonType) {
     Pi(CalculatorButtonType.Symbol("π")),
     Plus(CalculatorButtonType.Operator("+")),
     Minus(CalculatorButtonType.Operator("-")),
-    Multiply(CalculatorButtonType.Operator("x", "⋅")),
+    Multiply(CalculatorButtonType.Operator("x", "*")),
     Divide(CalculatorButtonType.Operator("÷", "/")),
     Comma(CalculatorButtonType.Symbol(",")),
     Period(CalculatorButtonType.Symbol(".")),

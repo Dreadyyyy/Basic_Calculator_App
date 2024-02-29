@@ -1,11 +1,14 @@
 package com.example.basiccalculatorapp.ui.screens.calculator
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.basiccalculatorapp.data.ExpressionEntity
 import com.example.basiccalculatorapp.data.ExpressionsRepository
 import com.example.basiccalculatorapp.ui.utils.CalculatorButton
 import com.example.basiccalculatorapp.ui.utils.CalculatorButtonType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import net.objecthunter.exp4j.ExpressionBuilder
 import net.objecthunter.exp4j.function.Function
 import net.objecthunter.exp4j.operator.Operator
@@ -54,6 +57,10 @@ class CalculatorViewModel(private val expressionsRepository: ExpressionsReposito
         }
 
         if (newExpression != "") {
+            addToHistory(
+                expressionToShowAsStringList.joinToString(""),
+                newExpression
+            )
             expressionToShowAsStringList.clear()
             expressionToEvaluateAsStringList.clear()
             newExpression.forEach { digit: Char ->
@@ -62,6 +69,16 @@ class CalculatorViewModel(private val expressionsRepository: ExpressionsReposito
             }
         }
         updateCalculatorState()
+    }
+    private fun addToHistory(expression: String, result: String) {
+        viewModelScope.launch {
+            expressionsRepository.insertExpression(
+                ExpressionEntity(
+                    expression = expression,
+                    result = result
+                )
+            )
+        }
     }
     private fun showSnackbar(message: String) {
         updateCalculatorState(snackbarMessage = message)

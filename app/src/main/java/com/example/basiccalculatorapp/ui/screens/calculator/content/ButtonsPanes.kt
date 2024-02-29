@@ -129,7 +129,8 @@ fun MediumButtonsPane(
             buttonsFontSize = buttonsFontSize,
             onClickAction = onClickAction,
             buttons = listOf(
-                CalculatorButton.Clear to biggerButtonModifier,
+                CalculatorButton.Equals to basicButtonModifier,
+                CalculatorButton.Clear to basicButtonModifier,
                 CalculatorButton.OpeningBracket to basicButtonModifier,
                 CalculatorButton.ClosingBracket to basicButtonModifier,
                 CalculatorButton.E to basicButtonModifier,
